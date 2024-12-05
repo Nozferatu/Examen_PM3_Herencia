@@ -108,6 +108,6 @@ fun championsLeague(lista: List<EquipoFutbol>){
     }
 
     sorteoOctavos.forEach{ (eq1, eq2) ->
-        println("${eq1.nombre}  - ${eq2.nombre}")
+        println("${eq1.nombre} - ${eq2.nombre}")
     }
 }

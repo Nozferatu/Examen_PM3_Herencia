@@ -9,9 +9,9 @@ fun main(){
 
     println(filtraJuegos(listaJuegos, 2024))
 
-    mapaJuegos(listaJuegos)
+    println(mapaJuegos(listaJuegos))
 
-    print(plataformas(listaJuegos))
+    println(plataformas(listaJuegos))
 
     val listaEquipos = listOf(
         EquipoFutbol("Equipo1", "Pais1"),
@@ -39,15 +39,24 @@ fun filtraJuegos(lista: List<Videojuego>, anio: Int): List<Videojuego>{
     return lista.filter { it.anioSalida == anio }
 }
 
-fun mapaJuegos(lista: List<Videojuego>): MutableMap<String, MutableList<String>> {
-    val mapa = mutableMapOf<String, MutableList<String>>()
+fun mapaJuegos(lista: List<Videojuego>): MutableMap<String, MutableMap<Int, MutableList<String>>> {
+    val mapa = mutableMapOf<String, MutableMap<Int, MutableList<String>>>()
 
     for(juego in lista){
         if(!mapa.containsKey(juego.plataforma)){
-            mapa[juego.plataforma] = mutableListOf()
+            mapa[juego.plataforma] = mutableMapOf()
+        }
+    }
+
+    var plataformaValue: MutableMap<Int, MutableList<String>>
+    for(juego in lista){
+        plataformaValue = mapa[juego.plataforma]!!
+
+        if(!plataformaValue.containsKey(juego.anioSalida)){
+            plataformaValue[juego.anioSalida] = mutableListOf()
         }
 
-        mapa[juego.plataforma]?.add(juego.nombre)
+        plataformaValue[juego.anioSalida]?.add(juego.nombre)
     }
 
     return mapa

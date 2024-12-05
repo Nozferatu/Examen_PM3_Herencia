@@ -7,11 +7,11 @@ fun main(){
         Videojuego("Knightmare", "MSX", 1986)
     )
 
-    //println(filtraJuegos(listaJuegos, 2024))
+    println(filtraJuegos(listaJuegos, 2024))
 
-    //mapaJuegos(listaJuegos)
+    mapaJuegos(listaJuegos)
 
-    //print(plataformas(listaJuegos))
+    print(plataformas(listaJuegos))
 
     val listaEquipos = listOf(
         EquipoFutbol("Equipo1", "Pais1"),
@@ -31,6 +31,8 @@ fun main(){
         EquipoFutbol("Equipo15", "Pais4"),
         EquipoFutbol("Equipo16", "Pais4")
     )
+
+    championsLeague(listaEquipos)
 }
 
 fun filtraJuegos(lista: List<Videojuego>, anio: Int): List<Videojuego>{
@@ -62,4 +64,41 @@ fun plataformas(lista: List<Videojuego>): MutableList<String> {
     }
 
     return plataformas
+}
+
+fun championsLeague(lista: List<EquipoFutbol>){
+    val sorteoOctavos = mutableMapOf<EquipoFutbol, EquipoFutbol>()
+    val equiposRestantes = lista.toMutableList()
+
+    var equipo1: EquipoFutbol
+    var equipo2: EquipoFutbol
+    var equipoValido = false
+
+    while(sorteoOctavos.size < 8){
+        equipo1 = equiposRestantes.random()
+
+        while(!equipoValido){
+            if(!sorteoOctavos.containsKey(equipo1) && !sorteoOctavos.containsValue(equipo1)){
+                equipoValido = true
+            }else equipo1 = equiposRestantes.random()
+        }
+
+        equipoValido = false
+        equipo2 = equiposRestantes.random()
+
+        while(!equipoValido){
+            if(!sorteoOctavos.containsKey(equipo2) && !sorteoOctavos.containsValue(equipo2)){
+                equipoValido = true
+            }else equipo2 = equiposRestantes.random()
+        }
+
+        sorteoOctavos[equipo1] = equipo2
+
+        equiposRestantes.remove(equipo1)
+        equiposRestantes.remove(equipo2)
+    }
+
+    sorteoOctavos.forEach{ (eq1, eq2) ->
+        println("${eq1.nombre}  - ${eq2.nombre}")
+    }
 }
